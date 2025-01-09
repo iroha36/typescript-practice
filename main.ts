@@ -153,7 +153,7 @@ type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 // ===== 状態管理のための型システム =====
 // アプリケーション全体の状態を表すインターフェース
-interface State {
+interface AppState {
     user: UserState;    // ユーザー関連の状態
     ui: UIState;        // UI関連の状態
     data: DataState;    // データ関連の状態
@@ -558,7 +558,7 @@ type StateTransition = {
 
 // 状態マシンクラス
 class StateMachine {
-    private currentState: State = 'idle';
+    private currentState: State = 'idle' as State;
     private transitions: StateTransition = {
         idle: { to: ['loading'] },
         loading: { to: ['success', 'error'] },
