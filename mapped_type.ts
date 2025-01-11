@@ -30,7 +30,7 @@ type PartialUser = {
 */
 
 // 使用例
-const user1: PartialUser = {
+const partialUser: PartialUser = {
   name: "John", // すべてのプロパティを提供する必要はありません
 };
 
