@@ -1,73 +1,113 @@
-// 非同期処理の基本を学ぶためのTypeScriptコード
+// TypeScript Synchronous Patterns
 
-// 非同期処理を模倣するための関数
-// これは指定した秒数後に解決されるPromiseを返します。
-function delay(seconds: number): Promise<string> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (seconds > 2) {
-        // 2秒を超える場合はエラーを発生させる（意図的な例）
-        reject(`Delay too long: ${seconds} seconds`);
-      } else {
-        resolve(`Completed after ${seconds} seconds`);
-      }
-    }, seconds * 1000);
-  });
+// 1. Simple Function Execution
+// Functions in JavaScript and TypeScript are synchronous by default.
+function simpleFunction() {
+  console.log("Start of simpleFunction");
+  console.log("Processing in simpleFunction");
+  console.log("End of simpleFunction");
 }
+simpleFunction();
 
-// 非同期処理をPromiseチェーンで処理する例
-function promiseExample(): void {
-  console.log("Promise example started");
-  delay(1)
-    .then(result => {
-      console.log(result); // 1秒後に"Completed after 1 seconds"と表示される
-      return delay(2);
-    })
-    .then(result => {
-      console.log(result); // さらに2秒後に"Completed after 2 seconds"と表示される
-    })
-    .catch(error => {
-      console.error("Error in promiseExample:", error);
-    })
-    .finally(() => {
-      console.log("Promise example finished");
-    });
+// 2. Function with Return Values
+// Functions can return values, and execution proceeds in a linear manner.
+function add(a: number, b: number): number {
+  console.log(`Adding ${a} and ${b}`);
+  return a + b;
 }
+const result = add(3, 4);
+console.log(`Result: ${result}`);
 
-// 非同期処理をasync/awaitで処理する例
-async function asyncAwaitExample(): Promise<void> {
-  console.log("Async/Await example started");
-  try {
-    const result1 = await delay(1);
-    console.log(result1); // 1秒後に"Completed after 1 seconds"と表示される
+// 3. Nested Function Calls
+// Nested function calls execute from the innermost to the outermost.
+function multiply(a: number, b: number): number {
+  console.log(`Multiplying ${a} and ${b}`);
+  return a * b;
+}
+const nestedResult = add(multiply(2, 3), 4); // multiply executes first, then add
+console.log(`Nested Result: ${nestedResult}`);
 
-    const result2 = await delay(2);
-    console.log(result2); // さらに2秒後に"Completed after 2 seconds"と表示される
-
-    // 以下はエラー例を発生させるための処理
-    const result3 = await delay(3); // この呼び出しはエラーになる
-    console.log(result3);
-  } catch (error) {
-    console.error("Error in asyncAwaitExample:", error);
-  } finally {
-    console.log("Async/Await example finished");
+// 4. Loop Execution
+// Loops in TypeScript are synchronous and block the thread until completed.
+function countToFive() {
+  for (let i = 1; i <= 5; i++) {
+    console.log(`Counting: ${i}`);
   }
 }
+countToFive();
 
-// メイン関数
-async function main(): Promise<void> {
-  console.log("Starting examples");
+// 5. Array Iteration with forEach
+// Array methods like forEach execute synchronously.
+const numbers = [1, 2, 3, 4, 5];
+numbers.forEach((num) => {
+  console.log(`Processing number: ${num}`);
+});
 
-  // Promiseチェーンの例を実行
-  promiseExample();
-
-  // async/awaitの例を実行
-  await asyncAwaitExample();
-
-  console.log("All examples finished");
+// 6. Error Handling in Synchronous Code
+// Use try-catch to handle errors in synchronous code.
+function divide(a: number, b: number): number {
+  if (b === 0) {
+    throw new Error("Division by zero is not allowed.");
+  }
+  return a / b;
+}
+try {
+  const divisionResult = divide(10, 2);
+  console.log(`Division Result: ${divisionResult}`);
+} catch (error) {
+  console.error(`Error: ${(error as Error).message}`);
 }
 
-// メイン関数の実行
-main().catch(error => {
-  console.error("Unhandled error in main:", error);
-});
+// 7. Recursion
+// Functions can call themselves to solve problems recursively.
+function factorial(n: number): number {
+  if (n <= 1) return 1; // Base case
+  return n * factorial(n - 1); // Recursive call
+}
+const factorialResult = factorial(5);
+console.log(`Factorial of 5: ${factorialResult}`);
+
+// 8. Sequential Function Calls
+// Functions can be called sequentially, one after the other.
+function first() {
+  console.log("First function executed.");
+}
+function second() {
+  console.log("Second function executed.");
+}
+function third() {
+  console.log("Third function executed.");
+}
+first();
+second();
+third();
+
+// 9. Blocking the Main Thread (Simulated Heavy Computation)
+// Synchronous code that takes a long time can block the main thread.
+function heavyComputation() {
+  console.log("Starting heavy computation...");
+  let sum = 0;
+  for (let i = 0; i < 1e7; i++) {
+    sum += i;
+  }
+  console.log(`Heavy computation result: ${sum}`);
+}
+heavyComputation();
+
+// 10. Using Generators for Controlled Execution
+// Generators allow pausing and resuming execution manually.
+function* controlledExecution() {
+  console.log("Step 1");
+  yield;
+  console.log("Step 2");
+  yield;
+  console.log("Step 3");
+}
+const generator = controlledExecution();
+generator.next(); // Step 1
+console.log("Paused execution");
+generator.next(); // Step 2
+generator.next(); // Step 3
+
+// End of File
+console.log("Synchronous processing examples complete.");
