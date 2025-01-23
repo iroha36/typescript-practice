@@ -176,7 +176,7 @@ console.log("numberBox:", numberBox.contents);
 // データ状態を示すユニオン型
 type Status = "active" | "inactive";
 
-class User {
+class User2 {
   constructor(public name: string, public status: Status) {}
 
   setStatus(newStatus: Status): void {
@@ -188,7 +188,7 @@ class User {
   }
 }
 
-const user = new User("Charlie", "active");
+const user = new User2("Charlie", "active");
 user.printInfo();  // User: Charlie, Status: active
 user.setStatus("inactive");
 user.printInfo();  // User: Charlie, Status: inactive

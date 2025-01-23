@@ -29,3 +29,32 @@ function handleMessage(message: Message) {
       break;
   }
 }
+
+type A = "1" | "2" | "3";
+
+import * as readline from "readline";
+
+// 標準入力を設定
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// プロンプトを表示
+rl.question("Enter a value (1, 2, or 3): ", (input) => {
+  // 型ガードで検証
+  if (isA(input)) {
+    const value: A = input; // 型Aの変数に代入
+    console.log(`Valid value of type A: ${value}`);
+  } else {
+    console.error("Error: Invalid value. Please enter '1', '2', or '3'.");
+  }
+
+  // 終了
+  rl.close();
+});
+
+// 型ガード関数
+function isA(value: string): value is A {
+  return value === "1" || value === "2" || value === "3";
+}
