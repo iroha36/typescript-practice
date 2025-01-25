@@ -85,13 +85,13 @@ abstract class Animal {
 }
 
 // abstract を継承するには、抽象メソッドの実装が必要
-class Dog extends Animal {
+class Dog2 extends Animal {
   makeSound(): void {
     console.log("ワンワン");
   }
 }
 
-const dog = new Dog();
+const dog = new Dog2();
 dog.makeSound(); // "ワンワン"
 dog.move();      // "移動した"
 
