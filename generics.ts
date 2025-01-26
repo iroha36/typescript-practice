@@ -66,20 +66,20 @@ console.log(getLength([1, 2, 3, 4])); // 4
 /**
  * 2-2. 特定の型の部分型 (SubType) であることを保証する
  */
-interface Animal {
+interface Animal3 {
   name: string;
 }
 
-interface Dog extends Animal {
+interface Dog extends Animal3 {
   bark(): void;
 }
 
-interface Cat extends Animal {
+interface Cat extends Animal3 {
   meow(): void;
 }
 
 // TがAnimalを継承していることを保証する
-function greetAnimal<T extends Animal>(animal: T): void {
+function greetAnimal<T extends Animal3>(animal: T): void {
   console.log(`Hello, ${animal.name}!`);
 }
 
@@ -278,17 +278,17 @@ const wrappedString = wrapValue("Hello"); // { value: string }
  * 7-1. Partial<T>
  *  - T のすべてのプロパティをオプショナルにした型を作る
  */
-interface User2 {
+interface User3 {
   id: number;
   name: string;
   age: number;
 }
 
 // ユーザーの一部の情報だけを更新する用の型
-function updateUser(user: User2, newValues: Partial<User2>): User2 {
+function updateUser(user: User3, newValues: Partial<User3>): User3 {
   return { ...user, ...newValues };
 }
-const user1: User2 = { id: 1, name: "Alice", age: 25 };
+const user1: User3 = { id: 1, name: "Alice", age: 25 };
 const updatedUser1 = updateUser(user1, { age: 26 }); 
 // => { id: 1, name: "Alice", age: 26 }
 
@@ -296,7 +296,7 @@ const updatedUser1 = updateUser(user1, { age: 26 });
  * 7-2. Readonly<T>
  *  - T のすべてのプロパティを読み取り専用にした型を作る
  */
-const readOnlyUser: Readonly<User2> = {
+const readOnlyUser: Readonly<User3> = {
   id: 2,
   name: "Bob",
   age: 30,
@@ -307,7 +307,7 @@ const readOnlyUser: Readonly<User2> = {
  * 7-3. Record<K, T>
  *  - K をキーに、T を値とするオブジェクトの型を作る
  */
-const userRecord: Record<number, User2> = {
+const userRecord: Record<number, User3> = {
   1: { id: 1, name: "Charlie", age: 40 },
   2: { id: 2, name: "Diana", age: 28 },
 };
